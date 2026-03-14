@@ -10,7 +10,26 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return "Heipparallaa!"
+    return "render_template(index.html)"
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    sql = "SELECT password_hash FROM users WHERE username = ?"
+    password_hash = db.query(sql, [username])[0][0]
+
+    if check_password_hash(password_hash, password):
+        session["username"] = username
+        return redirect("/")
+    else:
+        return "ERROR: wrong user or password"
+
+@app.route("/logout")
+def logout():
+    del session["username"]
+    return redirect("/")
     
 @app.route("/register")
 def register():
