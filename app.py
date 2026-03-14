@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, session
-from flask import redirect, render_template, request
-from werkzeug.security import generate_password_hash
+from flask import redirect, render_template, request, session
+from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
 
@@ -10,21 +10,24 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html"")
+    return render_template("index.html")
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    username = request.form["username"]
-    password = request.form["password"]
+    if request.method == "GET":
+        return render_template("login.html")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
 
-    sql = "SELECT password_hash FROM users WHERE username = ?"
-    password_hash = db.query(sql, [username])[0][0]
+        sql = "SELECT password_hash FROM users WHERE username = ?"
+        password_hash = db.query(sql, [username])[0][0]
 
-    if check_password_hash(password_hash, password):
-        session["username"] = username
-        return redirect("/")
-    else:
-        return "ERROR: wrong user or password"
+        if check_password_hash(password_hash, password):
+            session["username"] = username
+            return redirect("/")
+        else:
+            return "ERROR: wrong user or password"
 
 @app.route("/logout")
 def logout():
