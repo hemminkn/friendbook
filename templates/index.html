@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login</title>
+</head>
+
+<body>
+  <h1>friendbook</h1>
+	
+  {% if session.username %}
+  <p>
+    Logged in as user {{ session.username }}
+  </p>
+
+  {% endif %}
+  
+  <p>
+    <a href="/login">Login</a>
+  	<a href="/register">Create user</a>
+  	<a href="/logout">Logout</a>
+  	</p>
+  	
+</body>
+
+</html>
