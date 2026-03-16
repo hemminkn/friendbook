@@ -6,11 +6,11 @@
 </head>
 
 <body>
-  <h1>friendbook</h1>
+  <h1>Friendbook ＼(＾∀＾)メ(＾∀＾)ノ </h1>
 	
   {% if session.username %}
   <p>
-    Logged in as user {{ session.username }}
+    Logged in as user {{ session.username }}, your ID number is {{ session.user_id }}
   </p>
 
   {% endif %}
@@ -20,6 +20,10 @@
   	<a href="/register">Create user</a>
   	<a href="/logout">Logout</a>
   	</p>
+  	
+  <p>
+   <a href= "/new_post">Make a new post</a>
+  <p>
   	
 </body>
 
