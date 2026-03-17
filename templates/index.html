@@ -17,13 +17,21 @@
   
   <p>
     <a href="/login">Login</a>
-  	<a href="/register">Create user</a>
-  	<a href="/logout">Logout</a>
-  	</p>
+    <a href="/register">Create user</a>
+    <a href="/logout">Logout</a>
+  </p>
   	
   <p>
-   <a href= "/new_post">Make a new post</a>
+    <a href= "/new_post">Make a new post</a>
   <p>
+  
+  <h2>Posts</h2>
+  <ul>
+    {% for post in posts %}
+    <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+  	
 </body>
 
 </html>
