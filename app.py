@@ -33,7 +33,42 @@ def create_post():
     
     return redirect("/")
     
+@app.route("/edit_post/<int:post_id>")
+def edit_post(post_id):
+    post = posts.get_post(post_id)
+    return render_template("edit_post.html", post=post)
+    
+@app.route("/update_post", methods=["POST"])
+def update_post():
+    post_id = request.form["post_id"]
+    title = request.form["title"]
+    description = request.form["description"]
+    
+    posts.update_post(post_id, title, description)
+    
+    return redirect("/post/" + str(post_id))
+    
+@app.route("/register")
+def register():
+    return render_template("register.html")
+    
+@app.route("/create", methods=["POST"])
+def create():
+    username = request.form["username"]
+    password1 = request.form["password1"]
+    password2 = request.form["password2"]
+    if password1 != password2:
+        return "ERROR: passwords don't match"
+    password_hash = generate_password_hash(password1)
 
+    try:
+        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
+        db.execute(sql, [username, password_hash])
+    except sqlite3.IntegrityError:
+        return "ERROR: username is taken"
+
+    return "User created"
+    
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -58,27 +93,6 @@ def login():
 def logout():
     session.clear()
     return redirect("/")
-    
-@app.route("/register")
-def register():
-    return render_template("register.html")
-
-@app.route("/create", methods=["POST"])
-def create():
-    username = request.form["username"]
-    password1 = request.form["password1"]
-    password2 = request.form["password2"]
-    if password1 != password2:
-        return "ERROR: passwords don't match"
-    password_hash = generate_password_hash(password1)
-
-    try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
-    except sqlite3.IntegrityError:
-        return "ERROR: username is taken"
-
-    return "User created"
 
 @app.route("/page1")
 def page1():
