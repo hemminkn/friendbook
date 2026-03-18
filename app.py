@@ -37,7 +37,7 @@ def create_post():
 def edit_post(post_id):
     post = posts.get_post(post_id)
     return render_template("edit_post.html", post=post)
-    
+
 @app.route("/update_post", methods=["POST"])
 def update_post():
     post_id = request.form["post_id"]
@@ -47,11 +47,24 @@ def update_post():
     posts.update_post(post_id, title, description)
     
     return redirect("/post/" + str(post_id))
-    
+
+@app.route("/remove_post/<int:post_id>", methods=["GET", "POST"])
+def remove_post(post_id):
+    if request.method == "GET":
+        post = posts.get_post(post_id)
+        return render_template("remove_post.html", post=post)
+        
+    if request.method == "POST":
+        if "remove" in request.form:
+            posts.remove_post(post_id)
+            return redirect("/")
+        else:
+            return redirect("/post/" + str(post_id))
+
 @app.route("/register")
 def register():
     return render_template("register.html")
-    
+
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
