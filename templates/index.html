@@ -12,19 +12,26 @@
   <p>
     Logged in as user {{ session.username }}, your ID number is {{ session.user_id }}
   </p>
-
-  {% endif %}
-  
   <p>
-    <a href="/login">Login</a>
-    <a href="/register">Create user</a>
     <a href="/logout">Log out</a>
   </p>
-  	
+
   <p>
     <a href= "/new_post">Make a new post</a>
-    <a href= "/find_post">Search for a post</a>
+  </p>
+  {% else %}
   <p>
+    <a href="/login">Login♡</a>
+  </p>
+  <p>
+    <a href="/register">Create user</a>
+  </p>
+
+  {% endif %}
+
+  <p>
+    <a href= "/find_post">Search for a post</a>
+  </p>
   
   <h2>Posts</h2>
   <ul>
