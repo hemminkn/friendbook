@@ -10,7 +10,7 @@
   <form action="/update_post" method="post">
   <p>
     Your friend's name <br />
-    <input type="text" name="title" value="{{ post.title }}"/>
+    <input type="text" name="title" value="{{ post.title }}" maxlength="50" required/>
   </p>
   <p>
     What to include in your post: <br />
@@ -23,7 +23,7 @@
       <li> One thing you want to experience together </li>
       <li> A small message to your friend </li>
     </ul>
-    <textarea name="description" rows="15" cols="67">{{ post.description }}</textarea>
+    <textarea name="description" rows="15" cols="67" maxlength="3000" required>{{ post.description }}</textarea>
   </p>
   <input type="hidden" name="post_id" value="{{ post.id }}" />
   <input type="submit" value="Update post" size="10" />
