@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = config.secret_key
 
 def require_login():
-    if "user id" not in session:
+    if "user_id" not in session:
         abort(403)
 
 @app.route("/")
@@ -44,7 +44,11 @@ def new_post():
 def create_post():
     require_login()
     title = request.form["title"]
+    if not title or len(title) > 50:
+        abort(403)
     description = request.form["description"]
+    if not description or len(description) > 3000:
+        abort(403)
     user_id = session["user_id"]
     
     posts.add_post(title, description, user_id)
