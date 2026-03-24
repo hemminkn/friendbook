@@ -19,6 +19,16 @@
   <p>
     By user <a href="/user/{{ post.user_id }}">{{ post.username }}</a>
   </p>
+  {% if classes %}
+  <p>
+    Type:
+    <ul>
+      {% for class in classes %}
+      <li>{{ class.value }}</li>
+      {% endfor %}
+    </ul>
+  </p>
+  {% endif %}
   <p>
     <a href="/">Go back</a>
   </p>

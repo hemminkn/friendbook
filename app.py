@@ -41,13 +41,14 @@ def show_post(post_id):
     post = posts.get_post(post_id)
     if not post:
         abort(404)
-    return render_template("show_post.html", post=post)
-    
+    classes = posts.get_classes(post_id)
+    return render_template("show_post.html", post=post, classes=classes)
+
 @app.route("/new_post")
 def new_post():
     require_login()
     return render_template("new_post.html")
-    
+
 @app.route("/create_post", methods=["POST"])
 def create_post():
     require_login()
@@ -58,11 +59,16 @@ def create_post():
     if not description or len(description) > 3000:
         abort(403)
     user_id = session["user_id"]
-    
-    posts.add_post(title, description, user_id)
-    
+
+    classes = []
+    friend_type = request.form["friend_type"] #section
+    if friend_type:
+        classes.append(("Type", friend_type))
+
+    posts.add_post(title, description, user_id, classes)
+
     return redirect("/")
-    
+
 @app.route("/edit_post/<int:post_id>")
 def edit_post(post_id):
     require_login()
