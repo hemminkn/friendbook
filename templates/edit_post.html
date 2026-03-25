@@ -24,9 +24,24 @@
       <li> A small message to your friend </li>
     </ul>
     <textarea name="description" rows="15" cols="67" maxlength="3000" required>{{ post.description }}</textarea>
-  </p>
-  <input type="hidden" name="post_id" value="{{ post.id }}" />
-  <input type="submit" value="Update post" size="10" />
+    </p>
+    <input type="hidden" name="post_id" value="{{ post.id }}" />
+    {% for class in all_classes %}
+    <p>
+      {{ class }}: <br />
+      <select name="classes">
+        <option value="">(select)</option>
+      {% for option in all_classes[class] %}
+        {% if classes[class] == option %}
+        <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
+        {% else %}
+        <option value="{{ class }}:{{ option }}">{{ option }}</option>
+        {% endif %}
+      {% endfor %}
+      </select>
+    </p>
+    {% endfor %}
+    <input type="submit" value="Update post" size="10" />
   </form>
 </body>
 
