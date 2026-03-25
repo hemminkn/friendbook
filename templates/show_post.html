@@ -21,10 +21,10 @@
   </p>
   {% if classes %}
   <p>
-    Type:
+    Classes:
     <ul>
       {% for class in classes %}
-      <li>{{ class.value }}</li>
+      <li>{{class.title}}: {{ class.value }}</li>
       {% endfor %}
     </ul>
   </p>

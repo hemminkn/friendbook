@@ -25,15 +25,17 @@
     </ul>
     <textarea name="description" rows="15" cols="67" maxlength="3000" required></textarea>
   </p>
+  {% for class in classes %}
   <p>
-    Select type: <br />
-    <select name="friend_type">
-      <option value="select">(select)</option>
-      <option value="friend">friend</option>
-      <option value="close friend">close friend</option>
-      <option value="best friend">best friend</option>
+    {{ class }}: <br />
+    <select name="classes">
+      <option value="">(select)</option>
+    {% for option in classes[class] %}
+      <option value="{{ class }}:{{ option }}">{{ option }}</option>
+    {% endfor %}
     </select>
   </p>
+  {% endfor %}
   <input type="submit" value="Create post" size="10" />
   </form>
 </body>

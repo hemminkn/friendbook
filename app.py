@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, session
+from flask import Flask
 from flask import abort, redirect, render_template, request, session
 import db
 import config
@@ -47,7 +47,8 @@ def show_post(post_id):
 @app.route("/new_post")
 def new_post():
     require_login()
-    return render_template("new_post.html")
+    classes = posts.get_all_classes()
+    return render_template("new_post.html", classes=classes)
 
 @app.route("/create_post", methods=["POST"])
 def create_post():
@@ -61,9 +62,10 @@ def create_post():
     user_id = session["user_id"]
 
     classes = []
-    friend_type = request.form["friend_type"] #section
-    if friend_type:
-        classes.append(("Type", friend_type))
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
 
     posts.add_post(title, description, user_id, classes)
 

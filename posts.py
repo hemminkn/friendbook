@@ -1,5 +1,17 @@
 import db
 
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+    for title, value in result:
+        classes[title].append(value)
+
+    return classes
+
 def add_post(title, description, user_id, classes):
     sql = """INSERT INTO posts (title, description, user_id)
             VALUES (?, ?, ?)"""
@@ -31,16 +43,18 @@ def get_post(post_id):
                     posts.id = ?"""
     result = db.query(sql, [post_id])
     return result[0] if result else None
-    
+
 def update_post(post_id, title, description):
     sql = """UPDATE posts SET title = ?,
                               description = ?
                           WHERE id = ?"""
     
     db.execute(sql, [title, description, post_id])
-    
+
 def remove_post(post_id):
-    sql = """DELETE FROM posts WHERE id = ?"""
+    sql = "DELETE FROM post_classes WHERE post_id = ?"
+    db.execute(sql, [post_id])
+    sql = "DELETE FROM posts WHERE id = ?"
     db.execute(sql, [post_id])
 
 def find_posts(query):
