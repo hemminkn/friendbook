@@ -23,6 +23,18 @@ def add_post(title, description, user_id, classes):
     for title, value in classes:
         db.execute(sql, [post_id, title, value])
 
+def add_comment(post_id, user_id, comment):
+    sql = """INSERT INTO comments (post_id, user_id, comment)
+            VALUES (?, ?, ?)"""
+    db.execute(sql, [post_id, user_id, comment])
+
+def get_comments(post_id):
+    sql = """SELECT comments.comment, users.id user_id, users.username
+             FROM comments, users
+             WHERE comments.post_id = ? AND comments.user_id = users.id
+             ORDER BY comments.id DESC"""
+    return db.query(sql, [post_id])
+
 def get_classes(post_id):
     sql = "SELECT title, value FROM post_classes WHERE post_id = ?"
     return db.query(sql, [post_id])
