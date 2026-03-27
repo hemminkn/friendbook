@@ -161,6 +161,22 @@ def add_image():
         posts.add_image(post_id, image)
         return redirect("/images/" + str(post_id))
 
+@app.route("/remove_images", methods=["POST"])
+def remove_images():
+    require_login()
+
+    post_id = request.form["post_id"]
+    post = posts.get_post(post_id)
+    if not post:
+        abort(404)
+    if post["user_id"] != session["user_id"]:
+        abort(403)
+
+    for image_id in request.form.getlist("image_id"):
+        posts.remove_image(post_id, image_id)
+
+    return redirect("/images/" + str(post_id))
+
 @app.route("/update_post", methods=["POST"])
 def update_post():
     require_login()
@@ -177,6 +193,8 @@ def update_post():
     description = request.form["description"]
     if not description or len(description) > 3000:
         abort(403)
+
+    all_classes = posts.get_all_classes()
 
     classes = []
     for entry in request.form.getlist("classes"):
