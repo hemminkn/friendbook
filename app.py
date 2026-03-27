@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import abort, redirect, render_template, request, session
+from flask import abort, redirect, make_response, render_template, request, session
 import db
 import config
 import posts
@@ -43,7 +43,18 @@ def show_post(post_id):
         abort(404)
     classes = posts.get_classes(post_id)
     comments = posts.get_comments(post_id)
-    return render_template("show_post.html", post=post, classes=classes, comments=comments)
+    images = posts.get_images(post_id)
+    return render_template("show_post.html", post=post, classes=classes, comments=comments, images=images)
+
+@app.route("/image/<int:image_id>")
+def show_image(image_id):
+    image = posts.get_image(image_id)
+    if not image:
+        abort(404)
+
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/png")
+    return response
 
 @app.route("/new_post")
 def new_post():
@@ -112,6 +123,43 @@ def edit_post(post_id):
         classes[entry["title"]] = entry["value"]
 
     return render_template("edit_post.html", post=post, classes=classes, all_classes=all_classes)
+
+@app.route("/images/<int:post_id>")
+def edit_images(post_id):
+    require_login()
+    post = posts.get_post(post_id)
+    if not post:
+        abort(404)
+    if post["user_id"] != session["user_id"]:
+        abort(403)
+
+    images = posts.get_images(post_id)
+
+    return render_template("images.html", post=post, images=images)
+
+@app.route("/add_image", methods=["POST"])
+def add_image():
+    require_login()
+
+    post_id = request.form["post_id"]
+    post = posts.get_post(post_id)
+    if not post:
+        abort(404)
+    if post["user_id"] != session["user_id"]:
+        abort(403)
+
+    file = request.files["image"]
+    if request.method == "POST":
+        file = request.files["image"]
+        if not file.filename.endswith(".png"):
+            return "ERROR: wrong format"
+
+        image = file.read()
+        if len(image) > 100 * 1024:
+            return "ERROR: image is too large"
+
+        posts.add_image(post_id, image)
+        return redirect("/images/" + str(post_id))
 
 @app.route("/update_post", methods=["POST"])
 def update_post():

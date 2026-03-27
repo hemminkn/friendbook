@@ -5,10 +5,16 @@ CREATE TABLE users (
 );
 
 CREATE TABLE posts (
-	id INTEGER PRIMARY KEY,
-	title TEXT,
-	description TEXT,
-	user_id INTEGER REFERENCES users
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    description TEXT,
+    user_id INTEGER REFERENCES users
+);
+
+CREATE TABLE images (
+    id INTEGER PRIMARY KEY,
+    post_id INTEGER REFERENCES posts,
+    image BLOB
 );
 
 CREATE TABLE comments (

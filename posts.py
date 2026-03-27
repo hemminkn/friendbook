@@ -35,6 +35,19 @@ def get_comments(post_id):
              ORDER BY comments.id DESC"""
     return db.query(sql, [post_id])
 
+def get_images(post_id):
+    sql = "SELECT id FROM images WHERE post_id = ?"
+    return db.query(sql, [post_id])
+
+def add_image(post_id, image):
+    sql = "INSERT INTO images (post_id, image) VALUES (?, ?)"
+    db.execute(sql, [post_id, image])
+
+def get_image(image_id):
+    sql = "SELECT image FROM images WHERE id = ?"
+    result = db.query(sql, [image_id])
+    return result[0][0] if result else None
+
 def get_classes(post_id):
     sql = "SELECT title, value FROM post_classes WHERE post_id = ?"
     return db.query(sql, [post_id])

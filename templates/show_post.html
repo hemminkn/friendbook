@@ -11,11 +11,17 @@
   <p>
     <a href="/edit_post/{{ post.id }}">Edit</a>
     <a href="/remove_post/{{ post.id }}">Remove</a>
+    <a href="/images/{{ post.id }}">Add pictures</a>
   </p>
   {% endif %}
   <p>
     {{ post.description }}
   </p>
+
+  {% for image in images %}
+  <img src="/image/{{ image.id }}" />
+  {% endfor %}
+
   <p>
     By user <a href="/user/{{ post.user_id }}">{{ post.username }}</a>
   </p>

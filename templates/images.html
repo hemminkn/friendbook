@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Me and {{ post.title }} </title>
+</head>
+
+<body>
+  <h1>Me and {{ post.title }}</h1>
+  
+  <h2>Add a new image:</h2>
+  <form action="/add_image" method="post" enctype="multipart/form-data">
+    <p>
+      Image: <input type="file" name="image" accept=".png" />
+    </p>
+    <input type="hidden" name="post_id" value="{{ post.id }}">
+    <input type="submit" value="Send" />
+  </form>
+  <p>
+    <a href="/post/{{ post.id }}">Go back</a>
+  </p>
+</body>
+
+</html>
