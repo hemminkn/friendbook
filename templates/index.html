@@ -1,43 +1,17 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Friendbook</title>
-</head>
+{% block title %}Friendbook{% endblock %}
 
-<body>
-  <h1>Friendbook</h1>
+{% block content %}
+
+<p><img src="https://c7.alamy.com/comp/BAAAM6/small-group-of-friends-BAAAM6.jpg" style="float:right;width:300px;height:500px;padding-right:200px;padding-top:50px;">
+</div>
   
-  <p><img src="https://c7.alamy.com/comp/BAAAM6/small-group-of-friends-BAAAM6.jpg" style="float:right;width:200px;height:500px;">
-  </div>
-  
-  {% if session.username %}
-  <p>
-    ‪♡ Welcome {{ session.username }}, your ID number is {{ session.user_id }} ‪♡
-  </p>
-  <p>
-    ‪♡ <a href="/logout">Log out</a> ‪♡
-    <a href= "/new_post">Make a new post</a> ‪♡
-  </p>
-  {% else %}
-  <p>
-    ‪♡ <a href="/login">Login</a> ‪♡
-    <a href="/register">Create user</a> ‪♡
-  </p>
+<h2>Posts</h2>
+<ul style="list-style-type: '‪♡ ';">
+  {% for post in posts %}
+  <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
 
-  {% endif %}
-
-  <p>
-    ‪♡ <a href= "/find_post">Search for a post</a> ‪♡
-  </p>
-  
-  <h2>Posts</h2>
-  <ul style="list-style-type: '‪♡ ';">
-    {% for post in posts %}
-    <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-  	
-</body>
-
-</html>
+{% endblock %}

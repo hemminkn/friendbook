@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Search for a post</title>
-</head>
+{% block title %}Search for a post{% endblock %}
+
+{% block content %}
 
 <body>
   <h1>Search for a post</h1>
@@ -22,12 +21,16 @@
   {% if query %}
   <h2>Results</h2>
   
+  {% if results %}
   <ul>
     {% for post in results %}
     <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
     {% endfor %}
   </ul>
+  {% else %}
+  No results ☹
   {% endif %}
-</body>
+  
+  {% endif %}
 
-</html>
+{% endblock %}

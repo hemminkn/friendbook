@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>{{ post.title }} </title>
-</head>
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
 
 <body>
   <h1>{{ post.title }}</h1>
@@ -48,6 +47,5 @@
   <p>
     <a href="/">Go back</a>
   </p>
-</body>
 
-</html>
+{% endblock %}
