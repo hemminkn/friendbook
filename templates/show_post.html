@@ -27,10 +27,9 @@
   </p>
   {% if classes %}
   <p>
-    Classes:
     <ul>
       {% for class in classes %}
-      <li>{{class.title}}: {{ class.value }}</li>
+      <li>{{ class.value }}</li>
       {% endfor %}
     </ul>
   </p>

@@ -6,35 +6,33 @@
 </head>
 
 <body>
-  <h1>Friendbook ＼(＾∀＾)メ(＾∀＾)ノ </h1>
-	
+  <h1>Friendbook</h1>
+  
+  <p><img src="https://c7.alamy.com/comp/BAAAM6/small-group-of-friends-BAAAM6.jpg" style="float:right;width:200px;height:500px;">
+  </div>
+  
   {% if session.username %}
   <p>
-    Logged in as user {{ session.username }}, your ID number is {{ session.user_id }}
+    ‪♡ Welcome {{ session.username }}, your ID number is {{ session.user_id }} ‪♡
   </p>
   <p>
-    <a href="/logout">Log out</a>
-  </p>
-
-  <p>
-    <a href= "/new_post">Make a new post</a>
+    ‪♡ <a href="/logout">Log out</a> ‪♡
+    <a href= "/new_post">Make a new post</a> ‪♡
   </p>
   {% else %}
   <p>
-    <a href="/login">Login</a>
-  </p>
-  <p>
-    <a href="/register">Create user</a>
+    ‪♡ <a href="/login">Login</a> ‪♡
+    <a href="/register">Create user</a> ‪♡
   </p>
 
   {% endif %}
 
   <p>
-    <a href= "/find_post">Search for a post</a>
+    ‪♡ <a href= "/find_post">Search for a post</a> ‪♡
   </p>
   
   <h2>Posts</h2>
-  <ul>
+  <ul style="list-style-type: '‪♡ ';">
     {% for post in posts %}
     <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
     {% endfor %}
