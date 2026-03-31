@@ -1,43 +1,40 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title> New post </title>
-</head>
+{% block title %}New post{% endblock %}
 
-<body>
-  <h1> ♡ New post ♡ </h1>
-  <form action="/create_post" method="post">
-  <p>
-    Your friend's name <br />
-    <input type="text" name="title" maxlength="50" required />
-  </p>
-  <p>
-    What to include in your post: <br />
-    <ul>
-      <li> How and when you and your friend met </li>
-      <li> What common interests and/or hobbies you have </li>
-      <li> Your favorite memory together </li>
-      <li> A nickname for your friend </li>
-      <li> Your favorite thing about them </li>
-      <li> One thing you want to experience together </li>
-      <li> A small message to your friend </li>
-    </ul>
-    <textarea name="description" rows="15" cols="67" maxlength="3000" required></textarea>
-  </p>
-  {% for class in classes %}
-  <p>
-    {{ class }}: <br />
-    <select name="classes">
-      <option value="">(select)</option>
-    {% for option in classes[class] %}
-      <option value="{{ class }}:{{ option }}">{{ option }}</option>
-    {% endfor %}
-    </select>
-  </p>
+{% block content %}
+
+<h1> ♡ New post ♡ </h1>
+<form action="/create_post" method="post">
+<p>
+  Your friend's name <br />
+  <input type="text" name="title" maxlength="50" required />
+</p>
+<p>
+  What to include in your post: <br />
+  <ul>
+    <li> How and when you and your friend met </li>
+    <li> What common interests and/or hobbies you have </li>
+    <li> Your favorite memory together </li>
+    <li> A nickname for your friend </li>
+    <li> Your favorite thing about them </li>
+    <li> One thing you want to experience together </li>
+    <li> A small message to your friend </li>
+  </ul>
+  <textarea name="description" rows="15" cols="67" maxlength="3000" required></textarea>
+</p>
+{% for class in classes %}
+<p>
+  {{ class }}: <br />
+  <select name="classes">
+    <option value="">(select)</option>
+  {% for option in classes[class] %}
+    <option value="{{ class }}:{{ option }}">{{ option }}</option>
   {% endfor %}
-  <input type="submit" value="Create post" size="10" />
-  </form>
-</body>
+  </select>
+</p>
+{% endfor %}
+<input type="submit" value="Create post" size="10" />
+</form>
 
-</html>
+{% endblock %}

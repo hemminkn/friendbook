@@ -8,9 +8,9 @@
   <h1>{{ post.title }}</h1>
   {% if session.user_id == post.user_id %}
   <p>
-    <a href="/edit_post/{{ post.id }}">Edit</a>
-    <a href="/remove_post/{{ post.id }}">Remove</a>
-    <a href="/images/{{ post.id }}">Add pictures</a>
+    ♡ <a href="/edit_post/{{ post.id }}">Edit</a> ♡
+    <a href="/remove_post/{{ post.id }}">Remove</a> ♡
+    <a href="/images/{{ post.id }}">Add pictures</a> ♡
   </p>
   {% endif %}
   <p>
@@ -44,8 +44,5 @@
     <textarea name="comment" rows="3" cols="30" maxlength="200" required></textarea> <br />
     <input type="hidden" name="post_id" value="{{ post.id  }}">
     <input type="submit" value="Post comment" /> 
-  <p>
-    <a href="/">Go back</a>
-  </p>
 
 {% endblock %}

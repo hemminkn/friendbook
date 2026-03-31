@@ -4,33 +4,27 @@
 
 {% block content %}
 
-<body>
-  <h1>Search for a post</h1>
+<h1>Search for a post</h1>
   
-  <form action="/find_post" method="get">
-  <p>
-    Search term: <input type="text" name="query" value="{{ query }}">
-  </p>
-  <input type="submit" value="Enter">
-  </form>
+<form action="/find_post" method="get">
+<p>
+  Search term: <input type="text" name="query" value="{{ query }}">
+</p>
+<input type="submit" value="Enter">
+</form>
   
-  <p>
-    <a href="/">Go back</a>
-  </p>
-  
-  {% if query %}
-  <h2>Results</h2>
-  
-  {% if results %}
-  <ul>
-    {% for post in results %}
-    <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-  {% else %}
-  No results ☹
-  {% endif %}
-  
-  {% endif %}
+{% if query %}
+<h2>Results</h2>
+
+{% if results %}
+<ul>
+  {% for post in results %}
+  <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+No results ☹
+{% endif %}
+{% endif %}
 
 {% endblock %}
