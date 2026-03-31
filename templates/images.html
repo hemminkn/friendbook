@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Me and {{ post.title }} </title>
-</head>
+{% block title %}Me and {{ post.title }}{% endblock %}
 
-<body>
+{% block content %}
+
   <h1>Me and {{ post.title }}</h1>
   
   {% if images %}
@@ -37,6 +35,5 @@
   <p>
     <a href="/post/{{ post.id }}">Go back to the post</a>
   </p>
-</body>
 
-</html>
+{% endblock %}

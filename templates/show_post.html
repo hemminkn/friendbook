@@ -4,8 +4,13 @@
 
 {% block content %}
 
-<body>
   <h1>{{ post.title }}</h1>
+  {% if classes %}
+      {% for class in classes %}
+      <p>♡ {{ class.value }}</p>
+      {% endfor %}
+  {% endif %}
+  
   {% if session.user_id == post.user_id %}
   <p>
     ♡ <a href="/edit_post/{{ post.id }}">Edit</a> ♡
@@ -24,15 +29,6 @@
   <p>
     By user <a href="/user/{{ post.user_id }}">{{ post.username }}</a>
   </p>
-  {% if classes %}
-  <p>
-    <ul>
-      {% for class in classes %}
-      <li>{{ class.value }}</li>
-      {% endfor %}
-    </ul>
-  </p>
-  {% endif %}
   <h2>Comments</h2>
   <ul>
     {% for comment in comments %}
@@ -42,7 +38,7 @@
   <form action="/create_comment" method="post">
     Comment: <br />
     <textarea name="comment" rows="3" cols="30" maxlength="200" required></textarea> <br />
-    <input type="hidden" name="post_id" value="{{ post.id  }}">
+    <input type="hidden" name="post_id" value="{{ post.id  }}"> <br />
     <input type="submit" value="Post comment" /> 
 
 {% endblock %}
