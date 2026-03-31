@@ -13,28 +13,28 @@
   
   {% if session.user_id == post.user_id %}
   <p>
-    ♡ <a href="/edit_post/{{ post.id }}">Edit</a> ♡
-    <a href="/remove_post/{{ post.id }}">Remove</a> ♡
-    <a href="/images/{{ post.id }}">Add pictures</a> ♡
+    ○ <a href="/edit_post/{{ post.id }}">Edit</a> ○
+    <a href="/remove_post/{{ post.id }}">Remove</a> ○
+    <a href="/images/{{ post.id }}">Add pictures</a>
   </p>
   {% endif %}
+  <div class="description">
   <p>
     {{ post.description }}
   </p>
+  </div>
 
   {% for image in images %}
-  <img src="/image/{{ image.id }}" />
+  <img class="postpic" src="/image/{{ image.id }}" />
   {% endfor %}
 
   <p>
     By user <a href="/user/{{ post.user_id }}">{{ post.username }}</a>
   </p>
   <h2>Comments</h2>
-  <ul>
     {% for comment in comments %}
-    <li><a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.comment }}</li>
+    <div class="comments"><a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.comment }}</div>
     {% endfor %}
-  </ul>
   <form action="/create_comment" method="post">
     Comment: <br />
     <textarea name="comment" rows="3" cols="30" maxlength="200" required></textarea> <br />

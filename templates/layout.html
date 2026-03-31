@@ -1,14 +1,9 @@
-<style>
-body {
-  background-color: #FFE6E8;
-}
-</style>
-
 <!DOCTYPE html>
 <html>
 
 <head>
   <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/main.css">
 </head>
 
 <body>
@@ -16,22 +11,22 @@ body {
   
   {% if session.username %}
   <p>
-    ‪♡ Welcome {{ session.username }}, your ID number is {{ session.user_id }} ‪♡
+    ‪Welcome {{ session.username }}, your ID number is {{ session.user_id }}
   </p>
   <p>
-    ‪♡ <a href="/logout">Log out</a> ‪♡
-    <a href= "/new_post">Make a new post</a> ‪♡
+    ‪○ <a href="/logout">Log out</a> ‪○
+    <a href= "/new_post">Make a new post</a> ‪
   </p>
   {% else %}
   <p>
-    ‪♡ <a href="/login">Login</a> ‪♡
-      <a href="/register">Register</a> ‪♡
+    ‪○ <a href="/login">Login</a> ‪○
+      <a href="/register">Register</a> ‪
   </p>
   {% endif %}
 
   <p>
-    ‪♡ <a href= "/find_post">Search for a post</a> ‪♡
-      <a href="/">Go back to homepage </a> ♡
+    ‪○ <a href= "/find_post">Search for a post</a> ‪○
+      <a href="/">Go back to homepage </a> 
   </p>
 
   {% block content %}{% endblock %}

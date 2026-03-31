@@ -4,14 +4,12 @@
 
 {% block content %}
 
-<p><img src="https://c7.alamy.com/comp/BAAAM6/small-group-of-friends-BAAAM6.jpg" style="float:right;width:300px;height:500px;padding-right:200px;padding-top:50px;">
-</div>
+<!-- <p><img class="postpic" src="https://c7.alamy.com/comp/BAAAM6/small-group-of-friends-BAAAM6.jpg" style="float:right;width:300px;height:500px;"> -->
   
 <h2>Posts</h2>
-<ul style="list-style-type: '‪♡ ';">
+<div class="allposts">
   {% for post in posts %}
-  <li><a href="/post/{{ post.id }}">{{ post.title }}</a></li>
+  <div><a href="/post/{{ post.id }}">{{ post.title }}</a></div>
   {% endfor %}
-</ul>
-
+</div>
 {% endblock %}
