@@ -1,4 +1,5 @@
 import db
+import datetime
 
 def get_all_classes():
     sql = "SELECT title, value FROM classes ORDER BY id"
@@ -24,12 +25,14 @@ def add_post(title, description, user_id, classes):
         db.execute(sql, [post_id, title, value])
 
 def add_comment(post_id, user_id, comment):
-    sql = """INSERT INTO comments (post_id, user_id, comment)
-            VALUES (?, ?, ?)"""
-    db.execute(sql, [post_id, user_id, comment])
+    sql = """INSERT INTO comments (post_id, user_id, comment, time)
+            VALUES (?, ?, ?, ?)"""
+    og_time = datetime.datetime.today()
+    time = og_time.strftime('%d-%m-%Y %H:%M')
+    db.execute(sql, [post_id, user_id, comment, time])
 
 def get_comments(post_id):
-    sql = """SELECT comments.comment, users.id user_id, users.username
+    sql = """SELECT comments.comment, comments.time, users.id user_id, users.username
              FROM comments, users
              WHERE comments.post_id = ? AND comments.user_id = users.id
              ORDER BY comments.id DESC"""
@@ -87,6 +90,10 @@ def update_post(post_id, title, description, classes):
         db.execute(sql, [post_id, title, value])
 
 def remove_post(post_id):
+    sql = "DELETE FROM comments WHERE post_id = ?"
+    db.execute(sql, [post_id])
+    sql = "DELETE FROM images WHERE post_id = ?"
+    db.execute(sql, [post_id])
     sql = "DELETE FROM post_classes WHERE post_id = ?"
     db.execute(sql, [post_id])
     sql = "DELETE FROM posts WHERE id = ?"

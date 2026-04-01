@@ -24,6 +24,7 @@ p {
 }
 
 .comments {
+  display: inline-block;
   border: 1px solid black;
   width: 300px;
   margin: 0.5em;
@@ -45,3 +46,5 @@ p {
   margin: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+

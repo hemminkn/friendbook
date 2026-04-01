@@ -21,7 +21,8 @@ CREATE TABLE comments (
     id INTEGER PRIMARY KEY,
     post_id INTEGER REFERENCES posts,
     user_id REFERENCES users,
-    comment TEXT
+    comment TEXT,
+    time TEXT
 );
 
 CREATE TABLE classes (
