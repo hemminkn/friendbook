@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import abort, redirect, make_response, render_template, request, session
+from flask import abort, redirect, make_response, render_template, request, session, flash
 import db
 import config
 import posts
@@ -152,11 +152,13 @@ def add_image():
     if request.method == "POST":
         file = request.files["image"]
         if not file.filename.endswith(".png"):
-            return "ERROR: wrong format"
+            flash("ERROR: wrong format")
+            return redirect("/images/" + str(post_id))
 
         image = file.read()
         if len(image) > 100 * 1024:
-            return "ERROR: image is too large"
+            flash("ERROR: image is too large")
+            return redirect("/images/" + str(post_id))
 
         posts.add_image(post_id, image)
         return redirect("/images/" + str(post_id))
@@ -239,12 +241,14 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-        return "ERROR: passwords don't match"
+        flash("ERROR: passwords don't match")
+        return redirect("/register")
 
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "ERROR: username is taken"
+        flash("ERROR: username is taken")
+        return redirect("/register")
 
     return "User created"
 
@@ -262,7 +266,8 @@ def login():
             session["username"] = username
             return redirect("/")
         else:
-            return "ERROR: wrong user or password"
+            flash("ERROR: wrong user or password")
+            return redirect("/login")
 
 @app.route("/logout")
 def logout():

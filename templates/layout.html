@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <h1>Friendbook</h1>
+  <h1>FriendBook</h1>
   
   {% if session.username %}
   <p>
@@ -28,6 +28,12 @@
     ‪○ <a href= "/find_post">Search for a post</a> ‪○
       <a href="/">Go back to homepage </a> 
   </p>
+
+  {% for message in get_flashed_messages() %}
+  <p>
+    <div class="flash"><b>{{ message }}</b></div>
+  </p>
+  {% endfor %}
 
   {% block content %}{% endblock %}
 

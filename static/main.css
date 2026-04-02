@@ -14,13 +14,14 @@ p {
 }
 
 .allposts div {
-  margin: 1px;
+  margin: 5px;
   width: 60px;
   height: 60px;
   line-height: 60px;
   background-color: #D5D6EA;
   border-radius: 50%;
   text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .comments {
@@ -47,4 +48,13 @@ p {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.flash {
+  display: inline-block;
+  border: 1px solid black;
+  width: 300px;
+  margin: 0.5em;
+  padding: 0.2em;
+  background-color: #AFEEEE;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
