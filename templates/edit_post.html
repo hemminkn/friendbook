@@ -39,6 +39,7 @@
     </select>
   </p>
   {% endfor %}
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Update post" size="10" />
   <input type="submit" name="back" value="Go back to the post">
 </form>

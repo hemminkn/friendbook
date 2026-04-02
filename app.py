@@ -1,3 +1,4 @@
+import secrets
 import sqlite3
 from flask import Flask
 from flask import abort, redirect, make_response, render_template, request, session, flash
@@ -11,6 +12,12 @@ app.secret_key = config.secret_key
 
 def require_login():
     if "user_id" not in session:
+        abort(403)
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
 @app.route("/")
@@ -65,6 +72,8 @@ def new_post():
 @app.route("/create_post", methods=["POST"])
 def create_post():
     require_login()
+    check_csrf()
+
     title = request.form["title"]
     if not title or len(title) > 50:
         abort(403)
@@ -92,6 +101,7 @@ def create_post():
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
     require_login()
+    check_csrf()
 
     comment = request.form["comment"]
     if not comment or len(comment) > 200:
@@ -140,6 +150,7 @@ def edit_images(post_id):
 @app.route("/add_image", methods=["POST"])
 def add_image():
     require_login()
+    check_csrf()
 
     post_id = request.form["post_id"]
     post = posts.get_post(post_id)
@@ -166,6 +177,7 @@ def add_image():
 @app.route("/remove_images", methods=["POST"])
 def remove_images():
     require_login()
+    check_csrf()
 
     post_id = request.form["post_id"]
     post = posts.get_post(post_id)
@@ -182,6 +194,8 @@ def remove_images():
 @app.route("/update_post", methods=["POST"])
 def update_post():
     require_login()
+    check_csrf()
+
     post_id = request.form["post_id"]
     post = posts.get_post(post_id)
     if not post:
@@ -215,6 +229,7 @@ def update_post():
 @app.route("/remove_post/<int:post_id>", methods=["GET", "POST"])
 def remove_post(post_id):
     require_login()
+
     post = posts.get_post(post_id)
     if not post:
         abort(404)
@@ -225,6 +240,7 @@ def remove_post(post_id):
         return render_template("remove_post.html", post=post)
         
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             posts.remove_post(post_id)
             return redirect("/")
@@ -256,6 +272,7 @@ def create():
 def login():
     if request.method == "GET":
         return render_template("login.html")
+
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -264,6 +281,7 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             flash("ERROR: wrong user or password")

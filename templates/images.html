@@ -17,6 +17,7 @@
       <img src="/image/{{ image.id }}" />
       {% endfor %} <br />
       <input type="hidden" name="post_id" value="{{ post.id }}"><br />
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
       <input type="submit" value="Remove selected images" />
     </form>
     
@@ -30,6 +31,7 @@
       Image (.png): <input type="file" name="image" accept=".png" />
     </p>
     <input type="hidden" name="post_id" value="{{ post.id }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Send" />
   </form>
   <p>

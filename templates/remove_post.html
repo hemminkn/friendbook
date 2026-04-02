@@ -8,6 +8,7 @@
 <p>Post: {{ post.title }}</p>
 <p>Are you sure you want to remove this post?</p>
 <form action="/remove_post/{{ post.id }}" method="post">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" name="remove" value="Remove post">
   <input type="submit" name="back" value="Go back to the post">
 </form>
