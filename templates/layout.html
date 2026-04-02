@@ -11,7 +11,7 @@
   
   {% if session.username %}
   <p>
-    ‪Welcome {{ session.username }}, your ID number is {{ session.user_id }}
+    ‪Welcome <a href="/user/{{ session.user_id }}">{{ session.username }}</a>, your ID number is {{ session.user_id }}
   </p>
   <p>
     ‪○ <a href="/logout">Log out</a> ‪○
