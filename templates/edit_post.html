@@ -7,11 +7,11 @@
 <h1>Edit post</h1>
 <form action="/update_post" method="post">
 <p>
-  Your friend's name <br />
-  <input type="text" name="title" value="{{ post.title }}" maxlength="50" required/>
+  <label for="title">Your friend's name </label> <br />
+  <input type="text" name="title" id="title" value="{{ post.title }}" maxlength="50" required/>
 </p>
 <p>
-  What to include in your post: <br />
+  <label for="description"> What to include in your post: </label> <br />
   <ul>
     <li> How and when you and your friend met </li>
     <li> What common interests and/or hobbies you have </li>
@@ -21,13 +21,13 @@
     <li> One thing you want to experience together </li>
     <li> A small message to your friend </li>
   </ul>
-  <textarea name="description" rows="15" cols="67" maxlength="3000" required>{{ post.description }}</textarea>
+  <textarea name="description" id="description" rows="15" cols="67" maxlength="3000" required>{{ post.description }}</textarea>
   </p>
   <input type="hidden" name="post_id" value="{{ post.id }}" />
   {% for class in all_classes %}
   <p>
-    {{ class }}: <br />
-    <select name="classes">
+    <label for="class{{ class }}">{{ class }}</label>: <br />
+    <select name="classes" id="class{{ class }}">
       <option value="">(select)</option>
     {% for option in all_classes[class] %}
       {% if classes[class] == option %}
