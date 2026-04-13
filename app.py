@@ -6,6 +6,7 @@ import db
 import config
 import posts
 import users
+import markupsafe
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -68,6 +69,12 @@ def new_post():
     require_login()
     classes = posts.get_all_classes()
     return render_template("new_post.html", classes=classes)
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 @app.route("/create_post", methods=["POST"])
 def create_post():
