@@ -7,7 +7,7 @@
   <h1>{{ post.title }}</h1>
   {% if classes %}
       {% for class in classes %}
-      <p>♡ {{ class.value }}</p>
+      <p>♡ {{ class.title }}: {{ class.value }}</p>
       {% endfor %}
   {% endif %}
   
