@@ -1,12 +1,15 @@
 import secrets
 import sqlite3
+
 from flask import Flask
 from flask import abort, redirect, make_response, render_template, request, session, flash
+import markupsafe
+
 import db
 import config
 import posts
 import users
-import markupsafe
+
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
