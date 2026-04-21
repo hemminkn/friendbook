@@ -1,4 +1,6 @@
-# friendbook
+# Friendbook
+
+## Functions
 
 * User can create a profile and login
 * User can add, edit and delete your own posts
@@ -8,4 +10,28 @@
 * You can mark a friend as a friend, close friend or a best friend and also random categories
 * You can also comment on posts
 
-! To run the application copy the repository on your own device, create a venv directory where you can activate the virtual environment and download the flask-library! Copy the contents of file "schema.sql" to a database file for ex. "database.db" and you can start using the application.
+## Installing the application
+Make sure you have Python installed and the repository cloned on your computer!
+
+Create a virtual environment:
+```
+$ python3 -m venv venv
+$ source venv/bin/activate
+```
+
+Install Flask:
+```
+$ pip install flask
+```
+
+Create the tables in the database and add the initial data:
+```
+$ sqlite3 database.db < schema.sql
+$ sqlite3 database.db < init.sql
+```
+
+Run the application:
+```
+$ flask run
+```
+Enjoy using the application :)
