@@ -1,5 +1,5 @@
-import db
 import datetime
+import db
 
 def get_all_classes():
     sql = "SELECT title, value FROM classes ORDER BY id"
@@ -21,8 +21,8 @@ def add_post(title, description, user_id, classes):
     post_id = db.last_insert_id()
 
     sql = "INSERT INTO post_classes (post_id, title, value) VALUES (?, ?, ?)"
-    for title, value in classes:
-        db.execute(sql, [post_id, title, value])
+    for class_title, value in classes:
+        db.execute(sql, [post_id, class_title, value])
 
 def add_comment(post_id, user_id, comment):
     sql = """INSERT INTO comments (post_id, user_id, comment, time)
@@ -86,8 +86,8 @@ def update_post(post_id, title, description, classes):
     db.execute(sql, [post_id])
 
     sql = "INSERT INTO post_classes (post_id, title, value) VALUES (?, ?, ?)"
-    for title, value in classes:
-        db.execute(sql, [post_id, title, value])
+    for post_title, value in classes:
+        db.execute(sql, [post_id, post_title, value])
 
 def remove_post(post_id):
     sql = "DELETE FROM comments WHERE post_id = ?"

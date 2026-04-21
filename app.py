@@ -5,7 +5,6 @@ from flask import Flask
 from flask import abort, redirect, make_response, render_template, request, session, flash
 import markupsafe
 
-import db
 import config
 import posts
 import users
@@ -34,8 +33,8 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    posts = users.get_posts(user_id)
-    return render_template("show_user.html", user=user, posts=posts)
+    user_posts = users.get_posts(user_id)
+    return render_template("show_user.html", user=user, posts=user_posts)
 
 @app.route("/find_post")
 def find_post():
@@ -52,10 +51,10 @@ def show_post(post_id):
     post = posts.get_post(post_id)
     if not post:
         abort(404)
-    classes = posts.get_classes(post_id)
-    comments = posts.get_comments(post_id)
-    images = posts.get_images(post_id)
-    return render_template("show_post.html", post=post, classes=classes, comments=comments, images=images)
+    cl = posts.get_classes(post_id)
+    co = posts.get_comments(post_id)
+    im = posts.get_images(post_id)
+    return render_template("show_post.html", post=post, classes=cl, comments=co, images=im)
 
 @app.route("/image/<int:image_id>")
 def show_image(image_id):
@@ -233,7 +232,7 @@ def update_post():
             classes.append((class_title, class_value))
 
     posts.update_post(post_id, title, description, classes)
-    
+
     return redirect("/post/" + str(post_id))
 
 @app.route("/remove_post/<int:post_id>", methods=["GET", "POST"])
@@ -248,14 +247,13 @@ def remove_post(post_id):
 
     if request.method == "GET":
         return render_template("remove_post.html", post=post)
-        
+
     if request.method == "POST":
         check_csrf()
         if "remove" in request.form:
             posts.remove_post(post_id)
             return redirect("/")
-        else:
-            return redirect("/post/" + str(post_id))
+        return redirect("/post/" + str(post_id))
 
 @app.route("/register")
 def register():
@@ -293,9 +291,9 @@ def login():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            flash("ERROR: wrong user or password")
-            return redirect("/login")
+
+        flash("ERROR: wrong user or password")
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():
