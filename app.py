@@ -264,6 +264,15 @@ def create():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
+
+    if not username:
+        flash("Username required")
+        return redirect("/register")
+
+    if not password1:
+        flash("Password required")
+        return redirect("/register")
+
     if password1 != password2:
         flash("ERROR: passwords don't match")
         return redirect("/register")
@@ -284,6 +293,10 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+
+        if not username or not password:
+            flash("Username and password are required")
+            return redirect("/login")
 
         user_id = users.check_login(username, password)
         if user_id:
