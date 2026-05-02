@@ -84,7 +84,7 @@ def create_post():
     check_csrf()
 
     title = request.form["title"]
-    if not title or len(title) > 50:
+    if not title or len(title) > 10:
         abort(403)
     description = request.form["description"]
     if not description or len(description) > 3000:
